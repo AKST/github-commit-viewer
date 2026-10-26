@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub Diff Filter — Categories</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>File categories</h1>
+      <p class="lede">Each category is a list of glob patterns, one per line. Toggle categories from the
+        <strong>Hide files</strong> menu on commit and PR diff pages.</p>
+    </header>
+
+    <details class="syntax">
+      <summary>Pattern syntax</summary>
+      <dl>
+        <dt><code>*</code></dt><dd>any characters except <code>/</code></dd>
+        <dt><code>**</code></dt><dd>any characters including <code>/</code>; <code>**/</code> also matches no directories</dd>
+        <dt><code>?</code> <code>[a-z]</code> <code>[!a-z]</code></dt><dd>one character, a class, a negated class</dd>
+        <dt><code>{a,b}</code></dt><dd>alternatives, nestable: <code>*.{test,spec}.{js,ts{,x}}</code></dd>
+        <dt>no <code>/</code></dt><dd>matches a file or directory name at any depth: <code>*.md</code>, <code>__snapshots__</code></dd>
+        <dt>contains <code>/</code></dt><dd>anchored at the repo root: <code>docs/**</code>; use <code>**/docs/**</code> for any depth</dd>
+        <dt>trailing <code>/</code></dt><dd>directories only: <code>fixtures/</code></dd>
+        <dt><code>!pattern</code></dt><dd>exclude; the last matching line wins</dd>
+        <dt><code># …</code></dt><dd>comment</dd>
+      </dl>
+    </details>
+
+    <section class="tester">
+      <label for="test-path">Try a path</label>
+      <input id="test-path" type="text" spellcheck="false" placeholder="pandas/tests/io/test_parsers.py">
+      <output id="test-result"></output>
+    </section>
+
+    <div id="categories"></div>
+
+    <div class="actions">
+      <button id="add" type="button">Add category</button>
+      <span class="spacer"></span>
+      <button id="reset" type="button" class="subtle">Restore defaults</button>
+      <button id="save" type="button" class="primary">Save</button>
+    </div>
+    <p id="status" role="status"></p>
+  </main>
+
+  <template id="category-template">
+    <section class="category">
+      <div class="category-head">
+        <input class="name" type="text" aria-label="Category name" placeholder="Category name">
+        <button class="remove subtle" type="button" aria-label="Remove category">Remove</button>
+      </div>
+      <textarea class="patterns" spellcheck="false" rows="6" aria-label="Patterns, one per line"></textarea>
+      <p class="error" hidden></p>
+    </section>
+  </template>
+
+  <script src="glob.js"></script>
+  <script src="defaults.js"></script>
+  <script src="store.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

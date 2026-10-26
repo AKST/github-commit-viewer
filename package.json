@@ -1,0 +1,9 @@
+{
+  "name": "github-diff-filter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser extension: hide files in GitHub diffs by glob-based category.",
+  "scripts": {
+    "test": "node --test"
+  }
+}

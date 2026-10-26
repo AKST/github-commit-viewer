@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub Diff Filter",
+  "version": "0.1.0",
+  "description": "Hide files in GitHub commit, compare and PR diffs by category — tests, docs, lockfiles — using glob patterns.",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "src/background.js",
+    "scripts": ["src/background.js"]
+  },
+  "action": {
+    "default_title": "GitHub Diff Filter: edit categories"
+  },
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["src/glob.js", "src/defaults.js", "src/store.js", "src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "github-diff-filter@akst.io",
+      "strict_min_version": "121.0"
+    }
+  }
+}
